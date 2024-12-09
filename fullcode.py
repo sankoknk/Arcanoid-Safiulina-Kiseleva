@@ -101,6 +101,7 @@ class Ball:
                     ball.dir_y = - ball.dir_y
 
                 platforms.remove(platform)
+                game.score += 1
 
     def render(self):
         pygame.draw.rect(screen, (178, 34, 34), self.rect)
@@ -108,6 +109,31 @@ class Ball:
 
 ball = Ball()
 
+class Game:
+    def __init__(self):
+        self.lives = 3
+        self.score = 0
+
+    def draw_lives(self):
+        lives_t = font.render(f"Lives: {self.lives}", True, (255, 255, 255))
+        screen.blit(lives_t, (10, 10))
+
+    def draw_score(self):
+        score_t = font.render(f"Score: {self.score}", True, (255, 255, 255))
+        screen.blit(score_t, (screen_w - 80, 10))
+
+    def gameover(self) :
+        if ball.rect.y + ball.ball_r >= screen_h:
+            self.lives -= 1
+            ball.__init__()
+
+        if self.lives <= 0:
+            game_over_text = font.render("Game Over", True, (255, 0, 0))
+            screen.blit(game_over_text, (screen_w // 2 - 100, screen_h // 2))
+            pygame.display.update()
+            pygame.time.wait(2000)
+            pygame.quit()
+game = Game()
 
 
 time = 400
@@ -140,7 +166,9 @@ while True:
     ball.update()
     ball.render()
 
-
+    game.draw_score()
+    game.draw_lives()
+    game.gameover()
 
     pygame.display.flip()
 
