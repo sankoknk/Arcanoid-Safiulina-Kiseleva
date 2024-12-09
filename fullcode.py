@@ -38,7 +38,7 @@ class Plblock:
         pygame.draw.rect(screen, (139, 0, 0), self.rect)
 
 
-plblock = Plblock()
+
 
 
 class Platform:
@@ -54,11 +54,6 @@ class Platform:
     def render(self):
         pygame.draw.rect(screen, (255, 160, 122), self.rect)
 
-
-platforms = []
-for x in range(25, screen_w - 65, 75):
-    for y in range(30, screen_h // 2, 35):
-        platforms.append(Platform(x, y))
 
 
 def liesbetween(a: pygame.Vector2, b: pygame.Vector2, c: pygame.Vector2):
@@ -107,8 +102,6 @@ class Ball:
         pygame.draw.rect(screen, (178, 34, 34), self.rect)
 
 
-ball = Ball()
-
 class Game:
     def __init__(self):
         self.lives = 3
@@ -128,15 +121,33 @@ class Game:
             ball.__init__()
 
         if self.lives <= 0:
-            game_over_text = font.render("Game Over", True, (255, 0, 0))
             screen.blit(game_over_text, (screen_w // 2 - 100, screen_h // 2))
             pygame.display.update()
             pygame.time.wait(2000)
             pygame.quit()
+
+
+
+# состояние игры
+GAME_STATE = "MENU"  # может быть MENU, GAME, GAME_OVER
+
+# объявление переменных меню
+play_button = None
+
+# объявление переменных игры
 game = Game()
-
-
+ball = Ball()
+plblock = Plblock()
+platforms = []
+for x in range(25, screen_w - 65, 75):
+    for y in range(30, screen_h // 2, 35):
+        platforms.append(Platform(x, y))
 time = 400
+
+
+# объявление переменных экрана окончания игры
+game_over_text = font.render("Game Over", True, (255, 0, 0))
+
 
 # ЗАДАЕМ МОМЕНТ ВЫКЛЮЧЕНИЯ ПРОГРАМЫ
 while True:
@@ -145,6 +156,14 @@ while True:
             pygame.quit()
             sys.exit()
 
+    screen.fill((0, 0, 0))
+
+    if GAME_STATE == "MENU":
+        pass
+    elif GAME_STATE == "GAME":
+        pass
+    elif GAME_STATE == "MENU":
+        pass
 
     time = time - 1
     if time == 0:
@@ -155,7 +174,7 @@ while True:
         time = 400
 
     # screen.blit(image, (0,0))
-    screen.fill((0, 0, 0))
+
 
     plblock.update()
     plblock.render()
