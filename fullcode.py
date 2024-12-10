@@ -56,20 +56,19 @@ class Ball:
             (self.radius, self.radius)
         )
         self.speed = 5
-        self.dir_x = 1
-        self.dir_y = -1
+        self.dir = pygame.Vector2(1, -1)
 
     def update(self):
         # шарик и экран
-        self.rect.x += self.speed * self.dir_x
-        self.rect.y += self.speed * self.dir_y
+        self.rect.x += self.speed * self.dir.x
+        self.rect.y += self.speed * self.dir.y
         if SCREEN_W - self.radius < self.rect.x or self.rect.x < 0:
-            self.dir_x *= -1
+            self.dir.x *= -1
         if SCREEN_H - self.radius < self.rect.y or self.rect.y < 0:
-            self.dir_y *= -1
+            self.dir.y *= -1
         # шарик и игровая платформа
-        if self.rect.colliderect(plblock.rect) and self.dir_y > 0:
-            self.dir_y *= -1
+        if self.rect.colliderect(plblock.rect) and self.dir.y > 0:
+            self.dir.y *= -1
         # ВЗАИМОДЕЙСТВИЕ ШАРИКА И ПЛАТФОРМ
         for platform in platforms:
             # проверка с какой стороны платформы произошло столкновение
@@ -81,16 +80,16 @@ class Ball:
                 vector = pygame.Vector2(self.rect.center) - pygame.Vector2(platform.rect.center)
                 if lies_between(platform.vec_topright, vector, platform.vec_bottomright):  # справа
                     ball.rect.left = platform.rect.right
-                    ball.dir_x = -ball.dir_x
+                    ball.dir.x = -ball.dir.x
                 if lies_between(platform.vec_topright, vector, platform.vec_topleft):  # сверху
                     ball.rect.bottom = platform.rect.top
-                    ball.dir_y = -ball.dir_y
+                    ball.dir.y = -ball.dir.y
                 if lies_between(platform.vec_topleft, vector, platform.vec_bottomleft):  # слева
                     ball.rect.right = platform.rect.left
-                    ball.dir_x = -ball.dir_x
+                    ball.dir.x = -ball.dir.x
                 if lies_between(platform.vec_bottomleft, vector, platform.vec_bottomright):  # снизу
                     ball.rect.top = platform.rect.bottom
-                    ball.dir_y = -ball.dir_y
+                    ball.dir.y = -ball.dir.y
 
                 platforms.remove(platform)
                 game.score += 1
