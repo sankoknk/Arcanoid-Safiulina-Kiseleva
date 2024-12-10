@@ -131,18 +131,25 @@ class Button:
         self.rect.center = (x, y)
         self.text = text
         self.callback = callback
+        self.pressed = False
 
     def render(self):
         self.update()
         text = FONT.render(self.text, True, (255, 255, 255))
-        pygame.draw.rect(SCREEN, (255, 0, 0), self.rect)
+        pygame.draw.rect(SCREEN, (255, 0, 0) if self.pressed else (0, 255, 0), self.rect)
         SCREEN.blit(text, text.get_rect(center=self.rect.center))
 
     def update(self):
         cursor = pygame.mouse.get_pos()
         if self.rect.collidepoint(cursor):
             if any(pygame.mouse.get_pressed()):
+                self.pressed = True
+            elif self.pressed:
                 self.callback()
+                self.__init__(self.rect.centerx, self.rect.centery, self.text, self.callback)
+                return
+        else:
+            self.pressed = False
 
 
 # состояние игры
