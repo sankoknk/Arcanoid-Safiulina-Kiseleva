@@ -60,8 +60,8 @@ class Ball:
             (SCREEN_W // 2 - self.radius // 2, SCREEN_H - self.radius - plblock.plblock_h - 60),
             (self.radius, self.radius)
         )
-        speed = 8
-        self.dir = pygame.Vector2(randint(-100, 100), randint(-125, -75)).normalize() * speed
+        self.speed = 8
+        self.dir = pygame.Vector2(randint(-100, 100), randint(-125, -75)).normalize() * self.speed
         self.image = pygame.image.load("img/ball.png")
 
     def update(self):
@@ -73,7 +73,15 @@ class Ball:
             self.dir.y *= -1
         # шарик и игровая платформа
         if self.rect.colliderect(plblock.rect) and self.dir.y > 0:
-            self.dir.y *= -1
+            self.rect.bottom = plblock.rect.top + 1  # чуть-чуть поможем игроку, плюс чтобы не застревало
+            if abs(ball.rect.centerx - plblock.rect.centerx) < plblock.rect.width * 0.3:  # попали не в край платформы?
+                self.dir.y *= -1
+            else:
+                relative_vector = (
+                        pygame.Vector2(plblock.rect.centerx, plblock.rect.centery - 50) - pygame.Vector2(self.rect.center)
+                ).normalize() * self.speed
+                relative_vector.x *= -1
+                self.dir = relative_vector
         # ВЗАИМОДЕЙСТВИЕ ШАРИКА И ПЛАТФОРМ
         for platform in platforms:
             # проверка с какой стороны платформы произошло столкновение
