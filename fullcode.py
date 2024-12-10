@@ -10,7 +10,9 @@ SCREEN = pygame.display.set_mode((SCREEN_W, SCREEN_H))
 pygame.display.set_caption('Arcanoid')
 
 CLOCK = pygame.time.Clock()
-FONT = pygame.font.SysFont("Calibri", 16)
+BUTTON_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 60)
+SCOREBOARD_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 16)
+GAME_OVER_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 16)
 
 
 class Plblock:
@@ -107,11 +109,11 @@ class Game:
         self.score = 0
 
     def draw_lives(self):
-        lives_t = FONT.render(f"Lives: {self.lives}", True, (255, 255, 255))
+        lives_t = SCOREBOARD_FONT.render(f"Lives: {self.lives}", True, (255, 255, 255))
         SCREEN.blit(lives_t, (10, 10))
 
     def draw_score(self):
-        score_t = FONT.render(f"Score: {self.score}", True, (255, 255, 255))
+        score_t = SCOREBOARD_FONT.render(f"Score: {self.score}", True, (255, 255, 255))
         SCREEN.blit(score_t, (SCREEN_W - 80, 10))
 
     def process_game_over(self):
@@ -135,7 +137,7 @@ class Button:
 
     def render(self):
         self.update()
-        text = FONT.render(self.text, True, (255, 255, 255))
+        text = BUTTON_FONT.render(self.text, True, (255, 255, 255))
         pygame.draw.rect(SCREEN, (255, 0, 0) if self.pressed else (0, 255, 0), self.rect)
         SCREEN.blit(text, text.get_rect(center=self.rect.center))
 
@@ -187,7 +189,7 @@ def reset_game():
             platforms.append(Platform(x, y))
 
 # объявление переменных экрана окончания игры
-game_over_text = FONT.render("Game Over", True, (255, 0, 0))
+game_over_text = GAME_OVER_FONT.render("Game Over", True, (255, 0, 0))
 to_menu_button = Button(SCREEN_W // 2, SCREEN_H // 2 - 300, "To menu", set_game_state_menu)
 game_over_background = pygame.image.load("img/game_over_background.png")
 
