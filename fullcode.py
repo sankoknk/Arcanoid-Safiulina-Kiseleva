@@ -15,11 +15,12 @@ FONT = pygame.font.SysFont("Calibri", 16)
 
 class Plblock:
     def __init__(self):  # ПАРАМЕТРЫ ИГРОВОГО БЛОКА
-        self.plblock_w = 150
+        self.plblock_w = 100
         self.plblock_h = 15
         self.rect = pygame.Rect(SCREEN_W // 2 - self.plblock_w // 2, SCREEN_H - self.plblock_h - 60, self.plblock_w,
                                 self.plblock_h)
         self.plblock_speed = 6
+        self.image = pygame.image.load("img/plblock.png")
 
     def update(self):  # ДВИЖЕНИЕ ИГРОВОГО БЛОКА
         key = pygame.key.get_pressed()
@@ -30,7 +31,7 @@ class Plblock:
 
     def render(self):  # СОЗДАНИЕ БЛОКА
         self.update()
-        pygame.draw.rect(SCREEN, (139, 0, 0), self.rect)
+        SCREEN.blit(self.image, self.rect)
 
 
 class Platform:
