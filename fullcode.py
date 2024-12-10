@@ -168,6 +168,7 @@ plblock = Plblock()
 ball = Ball()
 platforms = []
 time = 400
+game_background = pygame.image.load("img/game_background.png")
 
 def reset_game():
     global game, plblock, ball, platforms
@@ -194,6 +195,7 @@ while True:
         play_button.render()
 
     elif GAME_STATE == "GAME":
+        SCREEN.blit(game_background, (0, 0))
         time -= 1
         if time == 0:
             for platform in platforms:
