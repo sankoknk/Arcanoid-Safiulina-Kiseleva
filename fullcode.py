@@ -121,14 +121,17 @@ class Game:
 
 class Button:
     def __init__(self, x, y, text, callback):
-        self.rect = pygame.Rect((x, y), (100, 100))
+        self.rect = pygame.Rect((0, 0), (100, 100))
+        self.rect.center = (x, y)
         self.text = text
         self.callback = callback
 
     def render(self):
         self.update()
         text = FONT.render(self.text, True, (255, 255, 255))
-        pygame.draw.rect(SCREEN, (255, 255, 255), text.get_rect(center=self.rect.center))
+        pygame.draw.rect(SCREEN, (255, 0, 0), self.rect)
+        SCREEN.blit(text, text.get_rect(center=self.rect.center))
+
 
     def update(self):
         cursor = pygame.mouse.get_pos()
@@ -141,7 +144,17 @@ class Button:
 GAME_STATE = "MENU"  # может быть MENU, GAME, GAME_OVER
 
 # объявление переменных меню
-play_button = None
+def set_game_state_menu():  # костыль, но что поделать, в лямбдах присваивание не работает
+    global GAME_STATE
+    GAME_STATE = "MENU"
+def set_game_state_game():
+    global GAME_STATE
+    GAME_STATE = "GAME"
+def set_game_state_game_over():
+    global GAME_STATE
+    GAME_STATE = "GAME_OVER"
+
+play_button = Button(SCREEN_W // 2, SCREEN_H // 2, "Play", set_game_state_game)
 
 # объявление переменных игры
 game = Game()
@@ -155,6 +168,7 @@ time = 400
 
 # объявление переменных экрана окончания игры
 game_over_text = FONT.render("Game Over", True, (255, 0, 0))
+to_menu_button = Button(SCREEN_W // 2, SCREEN_H // 2, "Play again", lambda: GAME_STATE == "MENU")
 
 # ЗАДАЕМ МОМЕНТ ВЫКЛЮЧЕНИЯ ПРОГРАМЫ
 while True:
@@ -164,31 +178,32 @@ while True:
             break
 
     SCREEN.fill((0, 0, 0))
+
     if GAME_STATE == "MENU":
-        pass
+        play_button.render()
+
     elif GAME_STATE == "GAME":
-        pass
-    elif GAME_STATE == "MENU":
-        pass
+        time -= 1
+        if time == 0:
+            for platform in platforms:
+                platform.rect.y += 35
+            for x in range(25, SCREEN_W - 65, 75):
+                platforms.append(Platform(x, 30))
+            time = 400
 
-    time -= 1
-    if time == 0:
+        plblock.render()
+
         for platform in platforms:
-            platform.rect.y += 35
-        for x in range(25, SCREEN_W - 65, 75):
-            platforms.append(Platform(x, 30))
-        time = 400
+            platform.render()
 
-    plblock.render()
+        ball.render()
 
-    for platform in platforms:
-        platform.render()
+        game.draw_score()
+        game.draw_lives()
+        game.process_game_over()
 
-    ball.render()
-
-    game.draw_score()
-    game.draw_lives()
-    game.process_game_over()
+    elif GAME_STATE == "GAME_OVER":
+        pass
 
     pygame.display.flip()
     CLOCK.tick(60)
