@@ -119,11 +119,11 @@ class Game:
 
     def draw_lives(self):
         lives_t = SCOREBOARD_FONT.render(f"Lives: {self.lives}", True, (255, 255, 255))
-        SCREEN.blit(lives_t, (10, 10))
+        SCREEN.blit(lives_t, (10, 5))
 
     def draw_score(self):
         score_t = SCOREBOARD_FONT.render(f"Score: {self.score}", True, (255, 255, 255))
-        SCREEN.blit(score_t, (SCREEN_W - 80, 10))
+        SCREEN.blit(score_t, (SCREEN_W - 80, 5))
 
     def process_game_over(self):
         if ball.rect.y + ball.radius >= SCREEN_H:
@@ -132,6 +132,8 @@ class Game:
 
         if self.lives <= 0:
             SCREEN.blit(game_over_text, (SCREEN_W // 2 - 100, SCREEN_H // 2))
+            global high_score
+            high_score = max(high_score, self.score)
             global GAME_STATE
             GAME_STATE = "GAME_OVER"
 
@@ -187,7 +189,7 @@ quit_button = Button(
     lambda: pygame.event.post(pygame.event.Event(pygame.QUIT))
 )
 title_text = TITLE_FONT.render("Arcanoid", True, (219, 33, 179))
-
+high_score = 0
 # объявление переменных игры
 game = Game()
 plblock = Plblock()
@@ -201,7 +203,7 @@ def reset_game():
     game.__init__(), plblock.__init__(), ball.__init__()
     platforms = []
     for x in range(30, SCREEN_W - 65, 60):
-        for y in range(30, SCREEN_H // 2, 20):
+        for y in range(30, SCREEN_H // 4, 20):
             platforms.append(Platform(x, y))
 
 # объявление переменных экрана окончания игры
@@ -223,6 +225,9 @@ while True:
         play_button.render()
         quit_button.render()
         SCREEN.blit(title_text, title_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 - 200)))
+        if high_score:
+            high_score_text = GAME_OVER_FONT.render("High score: " + str(high_score), True, (255, 0, 0))
+            SCREEN.blit(high_score_text, high_score_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 + 200)))
 
     elif GAME_STATE == "GAME":
         SCREEN.blit(game_background, (0, 0))
@@ -230,9 +235,9 @@ while True:
         if time == 0:
             for platform in platforms:
                 platform.rect.y += 20
-            for x in range(25, SCREEN_W - 65, 60):
+            for x in range(30, SCREEN_W - 65, 60):
                 platforms.append(Platform(x, 30))
-            time = 400
+            time = 1200
 
         plblock.render()
 
@@ -249,6 +254,8 @@ while True:
         SCREEN.blit(game_over_background, (0, 0))
         to_menu_button.render()
         SCREEN.blit(game_over_text, game_over_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 - 100)))
+        score_text = GAME_OVER_FONT.render("Score: " + str(game.score), True, (255, 0, 0))
+        SCREEN.blit(score_text, score_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 + 100)))
 
     pygame.display.flip()
     CLOCK.tick(60)
