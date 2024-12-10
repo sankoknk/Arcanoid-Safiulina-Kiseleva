@@ -161,6 +161,7 @@ def set_game_state_game_over():
     GAME_STATE = "GAME_OVER"
 
 play_button = Button(SCREEN_W // 2, SCREEN_H // 2, "Play", set_game_state_game)
+menu_background = pygame.image.load("img/menu_background.png")
 
 # объявление переменных игры
 game = Game()
@@ -193,6 +194,7 @@ while True:
     SCREEN.fill((0, 0, 0))
 
     if GAME_STATE == "MENU":
+        SCREEN.blit(menu_background, (0, 0))
         play_button.render()
 
     elif GAME_STATE == "GAME":
