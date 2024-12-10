@@ -51,13 +51,14 @@ class Platform:
 
 class Ball:
     def __init__(self):
-        self.radius = 20
+        self.radius = 10
         self.rect = pygame.Rect(
             (SCREEN_W // 2 - self.radius // 2, SCREEN_H - self.radius - plblock.plblock_h - 60),
             (self.radius, self.radius)
         )
         speed = 8
         self.dir = pygame.Vector2(randint(-100, 100), randint(-125, -75)).normalize() * speed
+        self.image = pygame.image.load("img/ball.png")
 
     def update(self):
         # шарик и экран
@@ -96,9 +97,7 @@ class Ball:
 
     def render(self):
         self.update()
-        surface = pygame.Surface((self.radius, self.radius), pygame.SRCALPHA)
-        pygame.draw.circle(surface, (0, 255, 0), surface.get_rect().center, self.radius // 2, 0)
-        SCREEN.blit(surface, ball.rect)
+        SCREEN.blit(self.image, ball.rect)
 
 
 class Game:
