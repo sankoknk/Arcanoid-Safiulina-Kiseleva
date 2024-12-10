@@ -10,6 +10,7 @@ SCREEN = pygame.display.set_mode((SCREEN_W, SCREEN_H))
 pygame.display.set_caption('Arcanoid')
 
 CLOCK = pygame.time.Clock()
+TITLE_FONT = pygame.font.Font("font/BadeenDisplay-Regular.ttf", 100)
 BUTTON_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 60)
 SCOREBOARD_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 16)
 GAME_OVER_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 60)
@@ -177,6 +178,7 @@ quit_button = Button(
     "Quit",
     lambda: pygame.event.post(pygame.event.Event(pygame.QUIT))
 )
+title_text = TITLE_FONT.render("Arcanoid", True, (219, 33, 179))
 
 # объявление переменных игры
 game = Game()
@@ -212,6 +214,7 @@ while True:
         SCREEN.blit(menu_background, (0, 0))
         play_button.render()
         quit_button.render()
+        SCREEN.blit(title_text, title_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 - 200)))
 
     elif GAME_STATE == "GAME":
         SCREEN.blit(game_background, (0, 0))
