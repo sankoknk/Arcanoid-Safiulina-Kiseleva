@@ -5,14 +5,14 @@ pygame.init()
 
 # ПАРАМЕТРЫ ЭКРАНА
 SCREEN_W = 600
-SCREEN_H = 800
+SCREEN_H = 600
 SCREEN = pygame.display.set_mode((SCREEN_W, SCREEN_H))
 pygame.display.set_caption('Arcanoid')
 
 CLOCK = pygame.time.Clock()
 TITLE_FONT = pygame.font.Font("font/BadeenDisplay-Regular.ttf", 100)
 BUTTON_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 60)
-SCOREBOARD_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 16)
+SCOREBOARD_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 20)
 GAME_OVER_FONT = pygame.font.Font("font/Jersey10-Regular.ttf", 60)
 
 
@@ -192,7 +192,7 @@ def reset_game():
     global game, plblock, ball, platforms
     game.__init__(), plblock.__init__(), ball.__init__()
     platforms = []
-    for x in range(25, SCREEN_W - 65, 60):
+    for x in range(30, SCREEN_W - 65, 60):
         for y in range(30, SCREEN_H // 2, 20):
             platforms.append(Platform(x, y))
 
