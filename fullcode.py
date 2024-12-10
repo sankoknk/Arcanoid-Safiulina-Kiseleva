@@ -38,6 +38,7 @@ class Platform:
         self.platform_w = 60
         self.platform_h = 20
         self.rect = pygame.Rect(x, y, self.platform_w, self.platform_h)
+        self.image = pygame.image.load("img/platform.png")
 
         self.vec_topright = pygame.Vector2(self.rect.topright) - pygame.Vector2(self.rect.center)
         self.vec_bottomright = pygame.Vector2(self.rect.bottomright) - pygame.Vector2(self.rect.center)
@@ -45,8 +46,7 @@ class Platform:
         self.vec_topleft = pygame.Vector2(self.rect.topleft) - pygame.Vector2(self.rect.center)
 
     def render(self):
-        pygame.draw.rect(SCREEN, (255, 160, 122), self.rect)
-        pygame.draw.rect(SCREEN, (255, 0, 0), self.rect, 1)
+        SCREEN.blit(self.image, self.rect)
 
 
 class Ball:
