@@ -181,6 +181,7 @@ def reset_game():
 # объявление переменных экрана окончания игры
 game_over_text = FONT.render("Game Over", True, (255, 0, 0))
 to_menu_button = Button(SCREEN_W // 2, SCREEN_H // 2 - 300, "To menu", set_game_state_menu)
+game_over_background = pygame.image.load("img/game_over_background.png")
 
 # ЗАДАЕМ МОМЕНТ ВЫКЛЮЧЕНИЯ ПРОГРАМЫ
 while True:
@@ -216,6 +217,7 @@ while True:
         game.process_game_over()
 
     elif GAME_STATE == "GAME_OVER":
+        SCREEN.blit(game_over_background, (0, 0))
         to_menu_button.render()
         SCREEN.blit(game_over_text, game_over_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 - 100)))
 
