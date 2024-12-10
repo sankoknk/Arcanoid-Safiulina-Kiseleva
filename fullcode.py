@@ -45,6 +45,7 @@ class Platform:
 
     def render(self):
         pygame.draw.rect(SCREEN, (255, 160, 122), self.rect)
+        pygame.draw.rect(SCREEN, (255, 0, 0), self.rect, 1)
 
 
 class Ball:
@@ -136,7 +137,6 @@ class Button:
         pygame.draw.rect(SCREEN, (255, 0, 0), self.rect)
         SCREEN.blit(text, text.get_rect(center=self.rect.center))
 
-
     def update(self):
         cursor = pygame.mouse.get_pos()
         if self.rect.collidepoint(cursor):
@@ -172,8 +172,8 @@ def reset_game():
     global game, plblock, ball, platforms
     game.__init__(), plblock.__init__(), ball.__init__()
     platforms = []
-    for x in range(25, SCREEN_W - 65, 75):
-        for y in range(30, SCREEN_H // 2, 35):
+    for x in range(25, SCREEN_W - 65, 60):
+        for y in range(30, SCREEN_H // 2, 20):
             platforms.append(Platform(x, y))
 
 # объявление переменных экрана окончания игры
@@ -196,8 +196,8 @@ while True:
         time -= 1
         if time == 0:
             for platform in platforms:
-                platform.rect.y += 35
-            for x in range(25, SCREEN_W - 65, 75):
+                platform.rect.y += 20
+            for x in range(25, SCREEN_W - 65, 60):
                 platforms.append(Platform(x, 30))
             time = 400
 
