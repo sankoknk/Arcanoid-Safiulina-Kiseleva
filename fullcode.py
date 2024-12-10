@@ -153,6 +153,7 @@ def set_game_state_menu():  # костыль, но что поделать, в �
     GAME_STATE = "MENU"
 def set_game_state_game():
     global GAME_STATE
+    reset_game()
     GAME_STATE = "GAME"
 def set_game_state_game_over():
     global GAME_STATE
@@ -165,14 +166,19 @@ game = Game()
 plblock = Plblock()
 ball = Ball()
 platforms = []
-for x in range(25, SCREEN_W - 65, 75):
-    for y in range(30, SCREEN_H // 2, 35):
-        platforms.append(Platform(x, y))
 time = 400
+
+def reset_game():
+    global game, plblock, ball, platforms
+    game.__init__(), plblock.__init__(), ball.__init__()
+    platforms = []
+    for x in range(25, SCREEN_W - 65, 75):
+        for y in range(30, SCREEN_H // 2, 35):
+            platforms.append(Platform(x, y))
 
 # объявление переменных экрана окончания игры
 game_over_text = FONT.render("Game Over", True, (255, 0, 0))
-to_menu_button = Button(SCREEN_W // 2, SCREEN_H // 2, "Play again", lambda: GAME_STATE == "MENU")
+to_menu_button = Button(SCREEN_W // 2, SCREEN_H // 2 - 300, "To menu", set_game_state_menu)
 
 # ЗАДАЕМ МОМЕНТ ВЫКЛЮЧЕНИЯ ПРОГРАМЫ
 while True:
@@ -207,7 +213,8 @@ while True:
         game.process_game_over()
 
     elif GAME_STATE == "GAME_OVER":
-        pass
+        to_menu_button.render()
+        SCREEN.blit(game_over_text, game_over_text.get_rect(center=(SCREEN_W // 2, SCREEN_H // 2 - 100)))
 
     pygame.display.flip()
     CLOCK.tick(60)
