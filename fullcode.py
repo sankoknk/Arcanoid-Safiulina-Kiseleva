@@ -97,7 +97,9 @@ class Ball:
 
     def render(self):
         self.update()
-        pygame.draw.rect(SCREEN, (178, 34, 34), self.rect)
+        surface = pygame.Surface((self.radius, self.radius), pygame.SRCALPHA)
+        pygame.draw.circle(surface, (0, 255, 0), surface.get_rect().center, self.radius // 2, 0)
+        SCREEN.blit(surface, ball.rect)
 
 
 class Game:
