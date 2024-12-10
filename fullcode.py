@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 
 pygame.init()
 
@@ -55,13 +56,12 @@ class Ball:
             (SCREEN_W // 2 - self.radius // 2, SCREEN_H - self.radius - plblock.plblock_h - 60),
             (self.radius, self.radius)
         )
-        self.speed = 5
-        self.dir = pygame.Vector2(1, -1)
+        speed = 8
+        self.dir = pygame.Vector2(randint(-100, 100), randint(-125, -75)).normalize() * speed
 
     def update(self):
         # шарик и экран
-        self.rect.x += self.speed * self.dir.x
-        self.rect.y += self.speed * self.dir.y
+        self.rect.move_ip(self.dir.x, self.dir.y)
         if SCREEN_W - self.radius < self.rect.x or self.rect.x < 0:
             self.dir.x *= -1
         if SCREEN_H - self.radius < self.rect.y or self.rect.y < 0:
