@@ -119,6 +119,24 @@ class Game:
             GAME_STATE = "GAME_OVER"
 
 
+class Button:
+    def __init__(self, x, y, text, callback):
+        self.rect = pygame.Rect((x, y), (100, 100))
+        self.text = text
+        self.callback = callback
+
+    def render(self):
+        self.update()
+        text = FONT.render(self.text, True, (255, 255, 255))
+        pygame.draw.rect(SCREEN, (255, 255, 255), text.get_rect(center=self.rect.center))
+
+    def update(self):
+        cursor = pygame.mouse.get_pos()
+        if self.rect.collidepoint(cursor):
+            if any(pygame.mouse.get_pressed()):
+                self.callback()
+
+
 # состояние игры
 GAME_STATE = "MENU"  # может быть MENU, GAME, GAME_OVER
 
