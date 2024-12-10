@@ -79,13 +79,17 @@ class Ball:
                 # вектор от центра платформы до центра шарика
                 vector = pygame.Vector2(self.rect.center) - pygame.Vector2(platform.rect.center)
                 if lies_between(platform.vec_topright, vector, platform.vec_bottomright):  # справа
-                    ball.dir_x = - ball.dir_x
+                    ball.rect.left = platform.rect.right
+                    ball.dir_x = -ball.dir_x
                 if lies_between(platform.vec_topright, vector, platform.vec_topleft):  # сверху
-                    ball.dir_y = - ball.dir_y
+                    ball.rect.bottom = platform.rect.top
+                    ball.dir_y = -ball.dir_y
                 if lies_between(platform.vec_topleft, vector, platform.vec_bottomleft):  # слева
-                    ball.dir_x = - ball.dir_x
+                    ball.rect.right = platform.rect.left
+                    ball.dir_x = -ball.dir_x
                 if lies_between(platform.vec_bottomleft, vector, platform.vec_bottomright):  # снизу
-                    ball.dir_y = - ball.dir_y
+                    ball.rect.top = platform.rect.bottom
+                    ball.dir_y = -ball.dir_y
 
                 platforms.remove(platform)
                 game.score += 1
