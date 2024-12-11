@@ -10,9 +10,9 @@
 - Алина Сафиуллина - дизайн, оформление, UI (user interface)
 
 ## Скриншоты
-![Screenshot1](screenshots/screenshot1.png)
-![Screenshot2](screenshots/screenshot2.png)
-![Screenshot3](screenshots/screenshot3.png)
+![Menu](screenshots/menu.png)
+![Game](screenshots/game.png)
+![Game Over](screenshots/game_over.png)
 
 ## TODO
 
