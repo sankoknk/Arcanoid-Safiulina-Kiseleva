@@ -64,13 +64,18 @@ class Ball:
         self.dir = pygame.Vector2(randint(-100, 100), randint(-125, -75)).normalize() * self.speed
         self.image = pygame.image.load("img/ball.png")
 
+        self.plblock_bounce_sound = pygame.mixer.Sound("sounds/bounce_plblock.wav")
+        self.break_block_sound = pygame.mixer.Sound("sounds/break_block.mp3")
+
     def update(self):
         # шарик и экран
         self.rect.move_ip(self.dir.x, self.dir.y)
         if SCREEN_W - self.radius < self.rect.x or self.rect.x < 0:
             self.dir.x *= -1
+            pygame.mixer.find_channel().play(self.plblock_bounce_sound)
         if SCREEN_H - self.radius < self.rect.y or self.rect.y < 0:
             self.dir.y *= -1
+            pygame.mixer.find_channel().play(self.plblock_bounce_sound)
         # шарик и игровая платформа
         if self.rect.colliderect(plblock.rect) and self.dir.y > 0:
             self.rect.bottom = plblock.rect.top + 1  # чуть-чуть поможем игроку, плюс чтобы не застревало
@@ -82,6 +87,7 @@ class Ball:
                 ).normalize() * self.speed
                 relative_vector.x *= -1
                 self.dir = relative_vector
+            pygame.mixer.find_channel().play(self.plblock_bounce_sound)
         # ВЗАИМОДЕЙСТВИЕ ШАРИКА И ПЛАТФОРМ
         for platform in platforms:
             # проверка с какой стороны платформы произошло столкновение
@@ -105,6 +111,7 @@ class Ball:
                     ball.dir.y = -ball.dir.y
 
                 platforms.remove(platform)
+                pygame.mixer.find_channel().play(self.break_block_sound)
                 game.score += 1
 
     def render(self):
@@ -116,6 +123,7 @@ class Game:
     def __init__(self):
         self.lives = 3
         self.score = 0
+        self.losing_life_sound = pygame.mixer.Sound("sounds/losing_life.mp3")
 
     def draw_lives(self):
         lives_t = SCOREBOARD_FONT.render(f"Lives: {self.lives}", True, (255, 255, 255))
@@ -128,6 +136,7 @@ class Game:
     def process_game_over(self):
         if ball.rect.y + ball.radius >= SCREEN_H:
             self.lives -= 1
+            pygame.mixer.find_channel().play(self.losing_life_sound)
             ball.__init__()
 
         if self.lives <= 0:

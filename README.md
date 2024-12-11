@@ -43,11 +43,10 @@
 #### Музыка
   - [x] Меню
   - [x] Игра
-  - [x] Game Over
 #### Звуки
-  - [ ] Попадание шарика в платформу
-  - [ ] Проигрыш
-  - [ ] Отскакивание шарика от платформы игрока
+  - [X] Попадание шарика в платформу
+  - [x] Проигрыш
+  - [X] Отскакивание шарика от платформы игрока/стены
 #### Спрайты
   - [x] Шарик
   - [x] Платформа
@@ -68,3 +67,4 @@
  - [Шрифты](https://fonts.google.com/)
  - [Спрайты платформ](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2FPixelArt%2Fcomments%2F1cml47o%2Fmy_attempt_to_create_animated_sprites_for_another%2F&psig=AOvVaw2wYQKmz7RMIipFMWTGmqyM&ust=1733948561155000&source=images&cd=vfe&opi=89978449&ved=0CBgQ3YkBahcKEwiA1Pj1g56KAxUAAAAAHQAAAAAQBA)
  - [Музыка](https://downloads.khinsider.com/game-soundtracks/album/arkanoid-nes)
+ - [Звуки](https://www.sounds-resource.com/mobile/doodlejump/sound/1636/)
