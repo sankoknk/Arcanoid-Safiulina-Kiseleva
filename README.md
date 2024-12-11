@@ -41,9 +41,9 @@
   - [x] Игра
   - [x] Game Over
 #### Музыка
-  - [ ] Меню
-  - [ ] Игра
-  - [ ] Game Over
+  - [x] Меню
+  - [x] Игра
+  - [x] Game Over
 #### Звуки
   - [ ] Попадание шарика в платформу
   - [ ] Проигрыш
@@ -67,3 +67,4 @@
  - [Фото Game Over](https://www.goodfon.com/abstraction/wallpaper-space-universe-stars-1207.html)
  - [Шрифты](https://fonts.google.com/)
  - [Спрайты платформ](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2FPixelArt%2Fcomments%2F1cml47o%2Fmy_attempt_to_create_animated_sprites_for_another%2F&psig=AOvVaw2wYQKmz7RMIipFMWTGmqyM&ust=1733948561155000&source=images&cd=vfe&opi=89978449&ved=0CBgQ3YkBahcKEwiA1Pj1g56KAxUAAAAAHQAAAAAQBA)
+ - [Музыка](https://downloads.khinsider.com/game-soundtracks/album/arkanoid-nes)

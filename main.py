@@ -134,8 +134,7 @@ class Game:
             SCREEN.blit(game_over_text, (SCREEN_W // 2 - 100, SCREEN_H // 2))
             global high_score
             high_score = max(high_score, self.score)
-            global GAME_STATE
-            GAME_STATE = "GAME_OVER"
+            set_game_state_game_over()
 
 
 class Button:
@@ -172,13 +171,23 @@ GAME_STATE = "MENU"  # может быть MENU, GAME, GAME_OVER
 def set_game_state_menu():  # костыль, но что поделать, в лямбдах присваивание не работает
     global GAME_STATE
     GAME_STATE = "MENU"
+    pygame.mixer.music.unload()
+    pygame.mixer.music.load("sounds/menu_background.mp3")
+    pygame.mixer.music.play(loops=-1)
 def set_game_state_game():
     global GAME_STATE
     reset_game()
     GAME_STATE = "GAME"
+    pygame.mixer.music.unload()
+    pygame.mixer.music.load("sounds/game_background.mp3")
+    pygame.mixer.music.play(loops=-1)
 def set_game_state_game_over():
     global GAME_STATE
     GAME_STATE = "GAME_OVER"
+    pygame.mixer.music.unload()
+    pygame.mixer.music.load("sounds/game_over.mp3")
+    pygame.mixer.music.play(loops=1)
+
 
 play_button = Button(SCREEN_W // 2, SCREEN_H // 2 - 60, "Play", set_game_state_game)
 menu_background = pygame.image.load("img/menu_background.png")
@@ -211,6 +220,7 @@ game_over_text = GAME_OVER_FONT.render("Game Over", True, (255, 0, 0))
 to_menu_button = Button(SCREEN_W // 2, SCREEN_H // 2, "To menu", set_game_state_menu)
 game_over_background = pygame.image.load("img/game_over_background.png")
 
+set_game_state_menu()
 # ЗАДАЕМ МОМЕНТ ВЫКЛЮЧЕНИЯ ПРОГРАМЫ
 while True:
     for e in pygame.event.get():
