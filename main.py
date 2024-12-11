@@ -1,5 +1,6 @@
-import pygame
 from random import randint
+
+import pygame
 
 pygame.init()
 
@@ -20,8 +21,12 @@ class Plblock:
     def __init__(self):  # ПАРАМЕТРЫ ИГРОВОГО БЛОКА
         self.plblock_w = 100
         self.plblock_h = 15
-        self.rect = pygame.Rect(SCREEN_W // 2 - self.plblock_w // 2, SCREEN_H - self.plblock_h - 60, self.plblock_w,
-                                self.plblock_h)
+        self.rect = pygame.Rect(
+            SCREEN_W // 2 - self.plblock_w // 2,
+            SCREEN_H - self.plblock_h - 60,
+            self.plblock_w,
+            self.plblock_h
+        )
         self.plblock_speed = 6
         self.image = pygame.image.load("img/plblock.png")
 
@@ -83,7 +88,10 @@ class Ball:
                 self.dir.y *= -1
             else:
                 relative_vector = (
-                        pygame.Vector2(plblock.rect.centerx, plblock.rect.centery - 50) - pygame.Vector2(self.rect.center)
+                      pygame.Vector2(
+                          plblock.rect.centerx,
+                          plblock.rect.centery - 50
+                      ) - pygame.Vector2(self.rect.center)
                 ).normalize() * self.speed
                 relative_vector.x *= -1
                 self.dir = relative_vector
@@ -176,6 +184,7 @@ class Button:
 # состояние игры
 GAME_STATE = "MENU"  # может быть MENU, GAME, GAME_OVER
 
+
 # объявление переменных меню
 def set_game_state_menu():  # костыль, но что поделать, в лямбдах присваивание не работает
     global GAME_STATE
@@ -183,6 +192,8 @@ def set_game_state_menu():  # костыль, но что поделать, в �
     pygame.mixer.music.unload()
     pygame.mixer.music.load("sounds/menu_background.mp3")
     pygame.mixer.music.play(loops=-1)
+
+
 def set_game_state_game():
     global GAME_STATE
     reset_game()
@@ -190,6 +201,8 @@ def set_game_state_game():
     pygame.mixer.music.unload()
     pygame.mixer.music.load("sounds/game_background.mp3")
     pygame.mixer.music.play(loops=-1)
+
+
 def set_game_state_game_over():
     global GAME_STATE
     GAME_STATE = "GAME_OVER"
@@ -216,6 +229,7 @@ platforms = []
 time = 400
 game_background = pygame.image.load("img/game_background.png")
 
+
 def reset_game():
     global game, plblock, ball, platforms
     game.__init__(), plblock.__init__(), ball.__init__()
@@ -223,6 +237,7 @@ def reset_game():
     for x in range(30, SCREEN_W - 65, 60):
         for y in range(30, SCREEN_H // 4, 20):
             platforms.append(Platform(x, y))
+
 
 # объявление переменных экрана окончания игры
 game_over_text = GAME_OVER_FONT.render("Game Over", True, (255, 0, 0))
